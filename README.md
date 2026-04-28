@@ -44,14 +44,6 @@ Data Source=(ServerName);Initial Catalog=AgeCalculationDb;Integrated Security=Tr
 
 👉 Replace (ServerName) with your own SQL Server name.
 
-▶️ Run the Project
-Open the project in Visual Studio
-Build the solution
-Run the application
-
-📥 Clone the Repository
-git clone https://github.com/kullaniciadi/Age_Calculation.git
-
 🎯 Purpose
 The goal of this project is to:
 Provide an easy way to calculate age
