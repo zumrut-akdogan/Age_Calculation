@@ -1,0 +1,59 @@
+﻿@model PersonViewModel
+@{
+    ViewData["Title"] = "Yeni Kişi Ekle";
+}
+
+<h1 class="text-center">Yeni Kişi Ekle</h1>
+
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData["Message"]
+    </div>
+}
+
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="text-red" asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="FirstName">Ad</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="LastName">Soyad</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="BirthDate">Doğum Tarihi</label>
+        <input asp-for="BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="Gender">Cinsiyet</label>
+        <select asp-for="Gender" class="form-control">
+            <option value="">Seçiniz</option>
+            <option value="Erkek">Erkek</option>
+            <option value="Kadın">Kadın</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="Photo" for="photo"></label>
+        <input class="form-control" type="file" class="form-control-file" id="photo" asp-for="Photo">
+    </div>
+    <br />
+    <button type="submit" class="btn btn-outline-primary">Ekle</button>
+</form>
+
+
+<!-- Burada validationscriptimizi cağırdik. Bunun sayesinde client sunucuya istek atmadan validaton işlemlerini yapabilecek. -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

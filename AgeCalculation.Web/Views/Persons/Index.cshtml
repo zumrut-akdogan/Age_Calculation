@@ -1,0 +1,143 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@model X.PagedList.IPagedList<Person>
+
+@{
+    ViewData["Title"] = "Kişiler";
+}
+
+<h1 class="text-center">Kişi Listesi</h1>
+
+<div class="text-right mb-3">
+    <a class="btn btn-outline-primary" asp-action="Create">Yeni Kişi Ekle</a>
+</div>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="search" class="form-control" placeholder="Arama..." name="searchString" value="@ViewData["CurrentFilter"]" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-primary">Ara</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fotoğraf</th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]" class="btn btn-link text-decoration-none">
+                    <span>Ad</span>
+                    @switch (ViewData["CurrentSort"] as string)
+                    {
+                        case "FirstName_desc":
+                            <i class="fas fa-sort-up ml-1"></i>
+                            break;
+                        case "FirstName_asc":
+                            <i class="fas fa-sort-down ml-1"></i>
+                            break;
+                        default:
+                            <i class="fas fa-sort ml-1"></i>
+                            break;
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]" class="btn btn-link text-decoration-none">
+                    <span>Soyad</span>
+                    @switch (ViewData["CurrentSort"] as string)
+                    {
+                        case "LastName_desc":
+                            <i class="fas fa-sort-up ml-1"></i>
+                            break;
+                        case "LastName_asc":
+                            <i class="fas fa-sort-down ml-1"></i>
+                            break;
+                        default:
+                            <i class="fas fa-sort ml-1"></i>
+                            break;
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["GenderSortParm"]" class="btn btn-link text-decoration-none">
+                    <span>Cinsiyet</span>
+                    @switch (ViewData["CurrentSort"] as string)
+                    {
+                        case "Gender_desc":
+                            <i class="fas fa-sort-up ml-1"></i>
+                            break;
+                        case "Gender_asc":
+                            <i class="fas fa-sort-down ml-1"></i>
+                            break;
+                        default:
+                            <i class="fas fa-sort ml-1"></i>
+                            break;
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["BirthDateSortParm"]" class="btn btn-link text-decoration-none">
+                    <span>Doğum Tarihi</span>
+                    @switch (ViewData["CurrentSort"] as string)
+                    {
+                        case "BirthDate_desc":
+                            <i class="fas fa-sort-up ml-1"></i>
+                            break;
+                        case "BirthDate_asc":
+                            <i class="fas fa-sort-down ml-1"></i>
+                            break;
+                        default:
+                            <i class="fas fa-sort ml-1"></i>
+                            break;
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["AgeSortParm"]" class="btn btn-link text-decoration-none">
+                    <span>Yaş</span>
+                    @if (ViewData["CurrentSort"] as string == "Age_desc")
+                    {
+                        <i class="fas fa-sort-up ml-1"></i>
+                    }
+                    else if (ViewData["CurrentSort"] as string == "Age_asc")
+                    {
+                        <i class="fas fa-sort-down ml-1"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-sort ml-1"></i>
+                    }
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>
+                    @if (person.PhotoPath == null)
+                    {
+                        <img class="img-thumbnail" src="/images/placeholder.jpg" alt="Profil Fotoğrafı" style="max-width: 100px; max-height: 100px;" />
+                    }
+                    else
+                    {
+                        <img class="img-thumbnail" src="/images/@person.PhotoPath" alt="Profil Fotoğrafı" style="max-width: 100px; max-height: 100px;" />
+                    }
+                </td>
+                <td>@person.FirstName</td>
+                <td>@person.LastName</td>
+                <td>@person.Gender</td>
+                <td>@person.BirthDate.ToString("d")</td>
+                <td>@person.Age</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="pagination-container">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Persons", new { page,  sortOrder = ViewData["FirstNameSortParm"], searchString = ViewData["SearchString"]  }), new PagedListRenderOptions { DisplayLinkToFirstPage =  PagedListDisplayMode.Always , DisplayLinkToLastPage = PagedListDisplayMode.Always, MaximumPageNumbersToDisplay = 5 })
+</div>
+
+

@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <canvas id="genderChart" style="max-width: 500px; max-height: 500px;"></canvas>
+                <h2 class="text-center">Cinsiyet Oranları</h2>
+            </div>
+
+            <div class="col-md-6">
+                <canvas id="ageChart" style="max-width: 500px; max-height: 500px;"></canvas>
+                <h2 class="text-center">Yaş Ortalamaları</h2>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
+    <script>
+        var genderData = @Html.Raw(ViewBag.genderData);
+        var ageData = @Html.Raw(ViewBag.ageData);
+
+        var genderChart = new Chart(document.getElementById('genderChart'), {
+            type: 'pie',
+            data: {
+                labels: genderData.labels,
+                datasets: genderData.datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        var ageChart = new Chart(document.getElementById('ageChart'), {
+            type: 'bar',
+            data: {
+                labels: ageData.labels,
+                datasets: ageData.datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>
